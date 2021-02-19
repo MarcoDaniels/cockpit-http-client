@@ -6,9 +6,9 @@ const run = async () => {
         apiToken: process.env.COCKPIT_API_TOKEN || '',
     })
 
-    const data = await client.collections.entries(`joyfulPost`)
-    if (data.success) {
-        console.log(data.data)
+    const data = await client.sync()
+    if (data) {
+        console.log(data)
     }
 }
 
