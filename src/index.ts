@@ -3,6 +3,9 @@ import { get } from './http'
 import { Entries, Schema, Sync } from './type'
 import { resolveEntries } from './resolveEntries'
 
+// export some types
+export { Sync, Entries, Schema, Field } from './type'
+
 export type CockpitClient = {
     apiURL: string
     apiToken: string
@@ -55,18 +58,18 @@ export const cockpitClient = ({ apiURL, apiToken }: CockpitClient) => {
         entries: <T>(id: string) => get<Entries<T>>(`singletons/get/${id}?populate=5`)(client),
     }
 
-    const sync = async <C, S>(): Promise<Sync<C, S>> => {
+    const sync = async <Collections, Singletons>(): Promise<Sync<Collections, Singletons>> => {
         const [collectionList, singletonList] = await Promise.all([collections.list(), singletons.list()])
 
         return {
             collections: collectionList.success
-                ? await resolveEntries<C>({
+                ? await resolveEntries<Collections>({
                       list: collectionList,
                       entriesFn: collections.entries,
                   })
                 : null,
             singletons: singletonList.success
-                ? await resolveEntries<S>({
+                ? await resolveEntries<Singletons>({
                       list: singletonList,
                       entriesFn: singletons.entries,
                   })
@@ -77,11 +80,8 @@ export const cockpitClient = ({ apiURL, apiToken }: CockpitClient) => {
     return {
         collections: collections,
         singletons: singletons,
-        sync: () => sync(),
+        sync: sync,
     }
 }
-
-// export some types
-export { Sync, SyncEntry, Entries, Schema, Field } from './type'
 
 export default cockpitClient

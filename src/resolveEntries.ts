@@ -1,23 +1,19 @@
-import { Entries } from './type'
+import { ResolveEntry } from './type'
 import { ResponseResult, ResponseSuccess } from './http'
 
-export type ResolveEntries<T> = {
+export type ResolveEntries = {
     list: ResponseSuccess<string[]>
-    entriesFn: (name: string) => ResponseResult<Entries<T>>
+    entriesFn: (name: string) => ResponseResult<ResolveEntry>
 }
 
-export const resolveEntries = <T>({ list, entriesFn }: ResolveEntries<T>) =>
-    Promise.all(
-        list.data.map(async (name) => {
-            const result = await entriesFn(name)
-            if (result.success) {
-                return {
-                    [name]: {
-                        entries: result.data.entries,
-                        total: result.data.total,
-                    },
-                }
+export const resolveEntries = async <T>({ list, entriesFn }: ResolveEntries) =>
+    ((await list.data.reduce(async (entries: Promise<{ [n: string]: ResolveEntry }>, name) => {
+        const result = await entriesFn(name)
+        if (result.success) {
+            ;(await entries)[name] = {
+                entries: result.data.entries,
+                total: result.data.total,
             }
-            return null
-        }),
-    )
+        }
+        return entries
+    }, Promise.resolve<{ [n: string]: ResolveEntry }>({}))) as unknown) as T

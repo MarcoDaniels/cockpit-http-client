@@ -28,14 +28,12 @@ export type Entries<T> = {
     total: number
 }
 
-export type SyncEntry<T> = {
-    [key: string]: {
-        entries: T[]
-        total: number
-    }
+export type ResolveEntry = {
+    entries: unknown[]
+    total: number
 }
 
 export type Sync<C, S> = {
-    collections: (SyncEntry<C> | null)[] | null
-    singletons: (SyncEntry<S> | null)[] | null
+    collections: C | null
+    singletons: S | null
 }
