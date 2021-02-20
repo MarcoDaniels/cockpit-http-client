@@ -1,17 +1,14 @@
 import got, { Got } from 'got'
-import { get } from './http'
-import { Entries, Schema, Sync } from './type'
-import { resolveEntries } from './resolveEntries'
+import { sync, Sync } from './sync'
+import { cockpitSingletons } from './cockpitSingletons'
+import { cockpitCollections } from './cockpitCollections'
 
-// export some types
-export { Sync, Entries, Schema, Field } from './type'
-
-export type CockpitClient = {
+export type Client = {
     apiURL: string
     apiToken: string
 }
 
-export const cockpitClient = ({ apiURL, apiToken }: CockpitClient) => {
+export const cockpitClient = ({ apiURL, apiToken }: Client) => {
     const client: Got = got.extend({
         prefixUrl: apiURL,
         headers: {
@@ -44,44 +41,16 @@ export const cockpitClient = ({ apiURL, apiToken }: CockpitClient) => {
         ],
     })
 
-    const collections = {
-        list: () => get<string[]>(`collections/listCollections`)(client),
-        schemas: () => get<Schema[]>(`collections/listCollections/extended`)(client),
-        schema: (id: string) => get<Schema>(`collections/collection/${id}`)(client),
-        entries: <T>(id: string) => get<Entries<T>>(`collections/entries/${id}?populate=5`)(client),
-    }
-
-    const singletons = {
-        list: () => get<string[]>(`singletons/listSingletons`)(client),
-        schemas: () => get<Schema[]>(`singletons/listSingletons/extended`)(client),
-        schema: (id: string) => get<Schema>(`singletons/singleton/${id}`)(client),
-        entries: <T>(id: string) => get<Entries<T>>(`singletons/get/${id}?populate=5`)(client),
-    }
-
-    const sync = async <Collections, Singletons>(): Promise<Sync<Collections, Singletons>> => {
-        const [collectionList, singletonList] = await Promise.all([collections.list(), singletons.list()])
-
-        return {
-            collections: collectionList.success
-                ? await resolveEntries<Collections>({
-                      list: collectionList,
-                      entriesFn: collections.entries,
-                  })
-                : null,
-            singletons: singletonList.success
-                ? await resolveEntries<Singletons>({
-                      list: singletonList,
-                      entriesFn: singletons.entries,
-                  })
-                : null,
-        }
-    }
-
     return {
-        collections: collections,
-        singletons: singletons,
-        sync: sync,
+        collections: cockpitCollections(client),
+        singletons: cockpitSingletons(client),
+        sync: sync(client),
     }
 }
+
+// also export some useful types
+export { Sync }
+export { ResponseResult, ResponseSuccess, ResponseError } from './http'
+export { Entries, Schema, Field, UnknownObject } from './cockpitTypes'
 
 export default cockpitClient
