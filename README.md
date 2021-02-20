@@ -14,6 +14,8 @@ including a sync endpoint that syncs all `collections` and `singletons` data.
 initiate client
 
 ```typescript
+import { cockpitClient } from 'cockpit-http-client'
+
 const client = cockpitClient({
     apiURL: process.env.COCKPIT_API_URL,
     apiToken: process.env.COCKPIT_API_TOKEN,

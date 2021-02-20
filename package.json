@@ -1,7 +1,13 @@
 {
     "name": "cockpit-http-client",
-    "version": "1.0.0",
+    "description": "A http-client for your Cockpit CMS content.",
+    "author": "Marco Daniel Martins <marcodanielmartins@gmail.com>",
+    "version": "0.0.1",
     "license": "MIT",
+    "keywords": [
+        "cockpit-cms",
+        "http-client"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/MarcoDaniels/cockpit-http-client.git"
@@ -9,15 +15,15 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "clean": "rm -rf dist/",
-        "build": "tsc",
-        "debug": "ts-node src/debug.ts"
+        "clean": "rimraf dist/",
+        "build": "tsc"
     },
     "dependencies": {
         "got": "11.8.1"
     },
     "devDependencies": {
         "prettier": "2.2.1",
+        "rimraf": "3.0.2",
         "ts-node": "9.1.1",
         "typescript": "4.1.5"
     }

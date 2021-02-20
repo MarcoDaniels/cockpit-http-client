@@ -21,19 +21,7 @@ export type Schema = {
 }
 
 export type Entries<T> = {
-    fields: {
-        [key: string]: unknown
-    }
+    fields: UnknownObject
     entries: T[]
     total: number
-}
-
-export type ResolveEntry = {
-    entries: unknown[]
-    total: number
-}
-
-export type Sync<C, S> = {
-    collections: C | null
-    singletons: S | null
 }
