@@ -2,26 +2,20 @@ export type UnknownObject = {
     [key: string]: unknown
 }
 
-export type Field = {
-    type: string
-    name: string
-    info?: string
-    label?: string
-    localize: boolean
-    required: boolean
-    options?: UnknownObject
-}
-
-export type Schema = {
+export type Schema<Fields> = {
     name: string
     label?: string
     group?: string
     description?: string
-    fields: Field[]
+    fields: Fields[]
 }
 
-export type Entries<T> = {
+export type Schemas<Fields> = {
+    [key: string]: Schema<Fields>
+}
+
+export type ResultEntries<Entries> = {
     fields: UnknownObject
-    entries: T[]
+    entries: Entries[]
     total: number
 }

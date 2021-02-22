@@ -1,6 +1,6 @@
 import { Got } from 'got'
 import { get, ResponseResult, ResponseSuccess } from './http'
-import { Schema } from './cockpitTypes'
+import { Schema, Schemas } from './cockpitTypes'
 
 export type CockpitSingletonEntry = {
     list: ResponseSuccess<string[]>
@@ -18,7 +18,7 @@ export const cockpitSingletonEntry = async <T>({ list, entriesFn }: CockpitSingl
 
 export const cockpitSingletons = (client: Got) => ({
     list: () => get<string[]>(`singletons/listSingletons`)(client),
-    schemas: <T>() => get<Schema[] | T>(`singletons/listSingletons/extended`)(client),
-    schema: <T>(id: string) => get<Schema | T>(`singletons/singleton/${id}`)(client),
-    entry: <T>(id: string) => get<T>(`singletons/get/${id}?populate=5`)(client),
+    schemas: <SchemaFields>() => get<Schemas<SchemaFields>>(`singletons/listSingletons/extended`)(client),
+    schema: <SchemaFields>(id: string) => get<Schema<SchemaFields>>(`singletons/singleton/${id}`)(client),
+    entry: <Entries>(id: string) => get<Entries>(`singletons/get/${id}?populate=5`)(client),
 })

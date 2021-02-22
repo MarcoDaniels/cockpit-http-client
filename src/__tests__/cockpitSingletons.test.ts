@@ -16,7 +16,10 @@ test('singletons list', async (t) => {
 })
 
 test('singletons schemas', async (t) => {
-    const mockData = [{ singleton1: { field: true } }, { singleton2: { field: true } }]
+    const mockData = {
+        singleton1: { name: 'singleton1', fields: [{ name: 'string' }] },
+        singleton2: { name: 'singleton2', fields: [{ name: 'string' }] },
+    }
 
     mockRequest(`singletons/listSingletons/extended`, mockData)
 
@@ -29,7 +32,7 @@ test('singletons schemas', async (t) => {
 })
 
 test('singletons schema', async (t) => {
-    const mockData = { singleton1: { field: true } }
+    const mockData = { name: 'singleton1', fields: [{ name: 'string' }] }
 
     mockRequest(`singletons/singleton/singleton1`, mockData)
 

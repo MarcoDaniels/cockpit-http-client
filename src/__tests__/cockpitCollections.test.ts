@@ -16,7 +16,10 @@ test('collections list', async (t) => {
 })
 
 test('collections schemas', async (t) => {
-    const mockData = [{ collection1: { field: true } }, { collection2: { field: true } }]
+    const mockData = {
+        collection1: { name: 'collection1', fields: [{ name: 'string' }] },
+        collection2: { name: 'collection2', fields: [{ name: 'string' }] },
+    }
 
     mockRequest(`collections/listCollections/extended`, mockData)
 
@@ -29,7 +32,7 @@ test('collections schemas', async (t) => {
 })
 
 test('collections schema', async (t) => {
-    const mockData = { collection1: { field: true } }
+    const mockData = { name: 'collection1', fields: [{ name: 'string' }] }
 
     mockRequest(`collections/collection/collection1`, mockData)
 
