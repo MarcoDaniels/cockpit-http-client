@@ -51,6 +51,6 @@ export const cockpitClient = ({ apiURL, apiToken }: Client) => {
 // also export some useful types
 export { Sync }
 export { ResponseResult, ResponseSuccess, ResponseError } from './http'
-export { Entries, Schema, Field, UnknownObject } from './cockpitTypes'
+export { ResultEntries, Schema, Schemas, UnknownObject } from './cockpitTypes'
 
 export default cockpitClient

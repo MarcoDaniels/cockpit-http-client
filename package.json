@@ -2,7 +2,7 @@
     "name": "cockpit-http-client",
     "description": "A http-client for your Cockpit CMS content.",
     "author": "Marco Daniel Martins <marcodanielmartins@gmail.com>",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "license": "MIT",
     "keywords": [
         "cockpit-cms",

@@ -1,6 +1,6 @@
 import { Got } from 'got'
 import { get, ResponseResult, ResponseSuccess } from './http'
-import { Entries, Schema } from './cockpitTypes'
+import { ResultEntries, Schema, Schemas } from './cockpitTypes'
 
 export type CockpitCollectionEntry = {
     entries: unknown[]
@@ -26,7 +26,7 @@ export const cockpitCollectionEntries = async <T>({ list, entriesFn }: CockpitCo
 
 export const cockpitCollections = (client: Got) => ({
     list: () => get<string[]>(`collections/listCollections`)(client),
-    schemas: <T>() => get<Schema[] | T>(`collections/listCollections/extended`)(client),
-    schema: <T>(id: string) => get<Schema | T>(`collections/collection/${id}`)(client),
-    entries: <T>(id: string) => get<Entries<T>>(`collections/entries/${id}?populate=5`)(client),
+    schemas: <SchemaFields>() => get<Schemas<SchemaFields>>(`collections/listCollections/extended`)(client),
+    schema: <SchemaFields>(id: string) => get<Schema<SchemaFields>>(`collections/collection/${id}`)(client),
+    entries: <Entries>(id: string) => get<ResultEntries<Entries>>(`collections/entries/${id}?populate=5`)(client),
 })
