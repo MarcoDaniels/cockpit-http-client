@@ -17,7 +17,38 @@
     "scripts": {
         "clean": "rimraf dist/",
         "build": "tsc",
-        "lint": "eslint -c .eslintrc ."
+        "lint": "eslint -c .eslintrc .",
+        "test:coverage": "nyc ava",
+        "test": "ava"
+    },
+    "ava": {
+        "files": [
+            "**/__tests__/*.test.(ts)"
+        ],
+        "extensions": [
+            "ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ],
+        "environmentVariables": {
+            "COCKPIT_API_URL": "https://example.com/api",
+            "COCKPIT_API_TOKEN": "api-token"
+        }
+    },
+    "nyc": {
+        "all": true,
+        "extensions": [
+            ".ts"
+        ],
+        "reporter": [
+            "text",
+            "lcov"
+        ],
+        "require": [
+            "ts-node/register",
+            "source-map-support/register"
+        ]
     },
     "dependencies": {
         "got": "11.8.1"
@@ -28,6 +59,8 @@
         "eslint": "7.20.0",
         "eslint-config-prettier": "8.0.0",
         "eslint-plugin-prettier": "3.3.1",
+        "nock": "13.0.7",
+        "nyc": "15.1.0",
         "prettier": "2.2.1",
         "rimraf": "3.0.2",
         "ts-node": "9.1.1",
