@@ -2,7 +2,7 @@
     "name": "cockpit-http-client",
     "description": "A http-client for your Cockpit CMS content.",
     "author": "Marco Daniel Martins <marcodanielmartins@gmail.com>",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "license": "MIT",
     "keywords": [
         "cockpit-cms",
@@ -16,12 +16,18 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "clean": "rimraf dist/",
-        "build": "tsc"
+        "build": "tsc",
+        "lint": "eslint -c .eslintrc ."
     },
     "dependencies": {
         "got": "11.8.1"
     },
     "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "4.15.1",
+        "@typescript-eslint/parser": "4.15.1",
+        "eslint": "7.20.0",
+        "eslint-config-prettier": "8.0.0",
+        "eslint-plugin-prettier": "3.3.1",
         "prettier": "2.2.1",
         "rimraf": "3.0.2",
         "ts-node": "9.1.1",

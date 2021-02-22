@@ -7,7 +7,7 @@ export type CockpitSingletonEntry = {
     entriesFn: (name: string) => ResponseResult<unknown>
 }
 
-export const cockpitSingletonEntry = async <T>({ list, entriesFn }: CockpitSingletonEntry) =>
+export const cockpitSingletonEntry = async <T>({ list, entriesFn }: CockpitSingletonEntry): Promise<T> =>
     ((await list.data.reduce(async (entries: Promise<{ [n: string]: unknown }>, name) => {
         const result = await entriesFn(name)
         if (result.success) {
@@ -18,7 +18,7 @@ export const cockpitSingletonEntry = async <T>({ list, entriesFn }: CockpitSingl
 
 export const cockpitSingletons = (client: Got) => ({
     list: () => get<string[]>(`singletons/listSingletons`)(client),
-    schemas: () => get<Schema[]>(`singletons/listSingletons/extended`)(client),
-    schema: (id: string) => get<Schema>(`singletons/singleton/${id}`)(client),
+    schemas: <T>() => get<Schema[] | T>(`singletons/listSingletons/extended`)(client),
+    schema: <T>(id: string) => get<Schema | T>(`singletons/singleton/${id}`)(client),
     entry: <T>(id: string) => get<T>(`singletons/get/${id}?populate=5`)(client),
 })
