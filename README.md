@@ -1,5 +1,8 @@
 # cockpit-http-client
 
+[![GitHub release](https://img.shields.io/github/v/release/marcodaniels/cockpit-http-client?include_prereleases)](https://www.npmjs.com/package/cockpit-http-client)
+[![Publish](https://github.com/marcodaniels/cockpit-http-client/workflows/Publish/badge.svg)](https://github.com/MarcoDaniels/cockpit-http-client/releases)
+
 > A http-client for your [Cockpit CMS](https://getcockpit.com/) content.
 
 ## Usage
