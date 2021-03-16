@@ -1,5 +1,5 @@
 import got, { Got } from 'got'
-import { sync, Sync } from './sync'
+import { sync, SyncAll, SyncSingletons, SyncCollections } from './sync'
 import { cockpitSingletons } from './cockpitSingletons'
 import { cockpitCollections } from './cockpitCollections'
 
@@ -49,7 +49,7 @@ export const cockpitClient = ({ apiURL, apiToken }: Client) => {
 }
 
 // also export some useful types
-export { Sync }
+export { SyncAll, SyncSingletons, SyncCollections }
 export { ResponseResult, ResponseSuccess, ResponseError } from './http'
 export { ResultEntries, Schema, Schemas, UnknownObject } from './cockpitTypes'
 

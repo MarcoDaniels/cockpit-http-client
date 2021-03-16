@@ -1,13 +1,13 @@
 import nock = require('nock')
 import { Scope } from 'nock'
-import got from 'got'
+import got, { Got } from 'got'
 
-export const mockClient = got.extend({
+export const mockClient: Got = got.extend({
     prefixUrl: process.env.COCKPIT_API_URL,
     responseType: 'json',
 })
 
-export const mockRequest = (url: string, result: string | Record<string, any>): Scope =>
+export const mockRequest = (url: string, result: string | string[] | Record<string, unknown>): Scope =>
     nock(process.env.COCKPIT_API_URL || '')
         .get(`/${url}`)
         .reply(200, result)

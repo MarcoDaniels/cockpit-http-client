@@ -51,7 +51,7 @@ test('collections entries', async (t) => {
         total: 1,
     }
 
-    mockRequest(`collections/entries/collection1?populate=5`, mockData)
+    mockRequest(`collections/entries/collection1?populate=1`, mockData)
 
     const collectionsEntries = await cockpitCollections(mockClient).entries<{ name: string }>('collection1')
 
