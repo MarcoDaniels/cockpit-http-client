@@ -54,15 +54,21 @@ Error response:
 
 ```
 
-sync method can take optional types for collections and singletons
-check [cockpit-type](https://github.com/MarcoDaniels/cockpit-type) for types generation
+sync example
 
 ```typescript
-// const data = await client.sync<MyCollections, MySingletons>()
-
-const data = await client.sync()
+const data = await client.sync.all()
 
 if (data && data.collections) {
     console.log(data.collections)
 }
+```
+
+entries and sync methods can take optional types for collections and singletons
+check [cockpit-type](https://github.com/MarcoDaniels/cockpit-type) for types generation.
+
+```typescript
+const syncCollections = await client.sync.collections<MyCollections>()
+
+const singleton = await client.singletons.entry<MySingleton>('mySingleton')
 ```

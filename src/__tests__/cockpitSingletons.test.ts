@@ -47,7 +47,7 @@ test('singletons schema', async (t) => {
 test('singletons entry', async (t) => {
     const mockData = { name: 'string' }
 
-    mockRequest(`singletons/get/singleton1?populate=5`, mockData)
+    mockRequest(`singletons/get/singleton1?populate=1`, mockData)
 
     const singletonsEntries = await cockpitSingletons(mockClient).entry<{ name: string }>('singleton1')
 
