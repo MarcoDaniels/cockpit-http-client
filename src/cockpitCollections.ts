@@ -1,5 +1,5 @@
 import { Got } from 'got'
-import { get, ResponseResult, ResponseSuccess } from './http'
+import { get, post, ResponseResult, ResponseSuccess } from './http'
 import { ResultEntries, Schema, Schemas } from './cockpitTypes'
 
 export type CockpitCollectionEntry = {
@@ -34,6 +34,8 @@ type CockpitCollections = {
     schemas: <S>() => ResponseResult<Schemas<S>>
     schema: <S>(id: string) => ResponseResult<Schema<S>>
     entries: <E>(id: string, populate?: number) => ResponseResult<ResultEntries<E>>
+    createEntry: <E>(collection: string, data: E) => ResponseResult<E>
+    updateEntry: <E>(collection: string, id: string, data: E) => ResponseResult<E>
 }
 
 export const cockpitCollections = (client: Got): CockpitCollections => ({
@@ -42,4 +44,8 @@ export const cockpitCollections = (client: Got): CockpitCollections => ({
     schema: <SchemaFields>(id: string) => get<Schema<SchemaFields>>(`collections/collection/${id}`)(client),
     entries: <Entries>(id: string, populate = 1) =>
         get<ResultEntries<Entries>>(`collections/entries/${id}?populate=${populate}`)(client),
+    createEntry: <Entry>(collection: string, data: Entry) =>
+        post<Entry>(`collections/save/${collection}`, data)(client),
+    updateEntry: <Entry>(collection: string, id: string, data: Entry) =>
+        post<Entry>(`collections/save/${collection}`, { _id: id, ...data })(client),
 })
