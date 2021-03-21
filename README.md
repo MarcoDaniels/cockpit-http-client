@@ -41,6 +41,26 @@ const singletons = await client.singletons.list()
 if (singletons.success) {
     console.log(singletons.data)
 }
+
+// create collection entry
+const create = await client.collections.createEntry('myCollection', {
+    name: 'Post 1',
+    url: 'post-1',
+})
+
+if (create.success) {
+    console.log(create.data)
+}
+
+// update collection entry
+const update = await client.collections.updateEntry('myCollection', 'myEntryID', {
+    name: 'Post 1',
+    url: 'post-1',
+})
+
+if (update.success) {
+    console.log(update.data)
+}
 ```
 
 for collections and singletons methods the API responds in the format:
@@ -71,4 +91,9 @@ check [cockpit-type](https://github.com/MarcoDaniels/cockpit-type) for types gen
 const syncCollections = await client.sync.collections<MyCollections>()
 
 const singleton = await client.singletons.entry<MySingleton>('mySingleton')
+
+const update = await client.collections.updateEntry<MyCollection>('myCollection', 'myEntryID', {
+    name: 'Post 1',
+    url: 'post-1',
+})
 ```

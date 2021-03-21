@@ -19,3 +19,11 @@ export const get = <T>(url: string) => (client: Got): ResponseResult<T> =>
             .then((res) => resolve({ success: true, data: res.body }))
             .catch((err) => resolve({ success: false, message: err.toString() })),
     )
+
+export const post = <T>(url: string, data: T) => (client: Got): ResponseResult<T> =>
+    new Promise((resolve) =>
+        client
+            .post<T>(url, { json: { data: data } })
+            .then((res) => resolve({ success: true, data: res.body }))
+            .catch((err) => resolve({ success: false, message: err.toString() })),
+    )
